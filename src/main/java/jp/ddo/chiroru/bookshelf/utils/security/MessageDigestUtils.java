@@ -4,6 +4,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
+import jp.ddo.chiroru.bookshelf.utils.ByteUtils;
+
 /**
  * メッセージダイジェストを扱うためのユーティリティです.
  * @author chiroru_0130@yahoo.co.jp
@@ -30,10 +32,20 @@ public class MessageDigestUtils {
         }
     }
 
+    /**
+     * {@link MessageDigest}インスタンスを生成し返却します.
+     * 返却されるインスタンスはデフォルトのアルゴリズムとして{@code SHA-256}が設定されています.
+     * @return {@link MessageDigest}インスタンス.
+     */
     public static MessageDigestUtils getInstance() {
         return getInstance(DEFAULT_ALGORITHM);
     }
 
+    /**
+     * メッセージダイジェストのアルゴリズムを指定し{@link MessageDigest}インスタンスを生成し返却します.
+     * @param メッセージダイジェストのアルゴリズム.指定可能なアルゴリズムは{@link ALGORITHM}のAPIマニュアルを参照して下さい.
+     * @return {@link MessageDigest}インスタンス.
+     */
     public static MessageDigestUtils getInstance(ALGORITHM algorithm) {
         return new MessageDigestUtils(algorithm);
     }
@@ -57,6 +69,11 @@ public class MessageDigestUtils {
         return buffer.toString();
     }
 
+    /**
+     * メッセージダイジェストの16新文字列表現を返却します.
+     * @param source メッセージダイジェストのソースとなる文字列.
+     * @return メッセージダイジェスト.
+     */
     public String toHexExpression(String source) {
         byte[] digest = computeDigest(source);
         StringBuilder buffer = new StringBuilder();
@@ -66,6 +83,10 @@ public class MessageDigestUtils {
         return buffer.toString();
     }
 
+    /**
+     * 有効になっているアルゴリズムを返却します.
+     * @return 現在有効なアルゴリズム.返却されるアルゴリズムについては{@link ALGORITHM}を参照.
+     */
     public ALGORITHM getAlgorithm() {
         return algorithm;
     }
@@ -76,6 +97,15 @@ public class MessageDigestUtils {
 
     /**
      * メッセージダイジェストのアルゴリズムを表現する列挙方です.
+     * サポートするアルゴリズムは以下の通りです。
+     * <ul>
+     *     <li>MD2</li>
+     *     <li>MD5</li>
+     *     <li>SHA</li>
+     *     <li>SHA_256</li>
+     *     <li>SHA_384</li>
+     *     <li>SHA_512</li>
+     * </ul>
      *　@see {@link MessageDigestUtils}
      * @since 1.0.0
      */
